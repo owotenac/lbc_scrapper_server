@@ -12,13 +12,13 @@ from city import searchCity
 import reader
 
 CURRENT_FOLDER = os.getcwd()
-OUTPUT_FOLDER = "ads\\results"
-REMOVED_FOLDER = 'ads\\removed'
-NON_TREATED_DATA = 'ads\\non_analyzed'
+OUTPUT_FOLDER = "ads/results"
+REMOVED_FOLDER = 'ads/removed'
+NON_TREATED_DATA = 'ads/non_analyzed'
 
 def auto_reader():
     # Generate the unique folder name
-    base_path = f'{CURRENT_FOLDER}\\ads\\{NON_TREATED_DATA}'
+    base_path = f'{CURRENT_FOLDER}/ads/{NON_TREATED_DATA}'
     if not os.path.exists(base_path):
         os.makedirs(base_path)    
     for location in searchCity:
@@ -32,13 +32,13 @@ def auto_reader():
             result = urlparse( item_url )
             id = result.path.split('/')[-1]
 
-            if os.path.exists( f'{base_path}\\{id}.json'):
+            if os.path.exists( f'{base_path}/{id}.json'):
                 continue
             #already saved?
-            if os.path.exists( f'{CURRENT_FOLDER}\\{OUTPUT_FOLDER}\\{id}.json'):
+            if os.path.exists( f'{CURRENT_FOLDER}/{OUTPUT_FOLDER}/{id}.json'):
                 continue
             #do not rerun if we removed it
-            if os.path.exists(f'{CURRENT_FOLDER}\\{REMOVED_FOLDER}\\{id}.json'):
+            if os.path.exists(f'{CURRENT_FOLDER}/{REMOVED_FOLDER}/{id}.json'):
                 continue
 
             print(f'Reading: {item_url}')
@@ -52,7 +52,7 @@ def auto_reader():
             data_item['analysis'] = data['analysis']
             data_item['financials'] = data['financials']
             #we save on disk
-            filename  = f'{base_path}\\{id}.json'
+            filename  = f'{base_path}/{id}.json'
             with open(filename, 'w',  encoding='utf-8') as f:
                 json.dump(data_item, f)
 
@@ -66,9 +66,9 @@ def coldData():
         message = "tempAds parameter is required"
         return { "error": message }, 400
 
-    folder = f'{CURRENT_FOLDER}\\{OUTPUT_FOLDER}\\'
+    folder = f'{CURRENT_FOLDER}/{OUTPUT_FOLDER}/'
     if (tempAds == '1'):
-        folder = f'{CURRENT_FOLDER}\\{NON_TREATED_DATA}\\'
+        folder = f'{CURRENT_FOLDER}/{NON_TREATED_DATA}/'
         
     data = []
     for filename in os.listdir(folder):  
@@ -88,9 +88,9 @@ def removeColdData():
 
     result = urlparse( url )
     id = result.path.split('/')[-1]
-    filename  = f'{CURRENT_FOLDER}\\{OUTPUT_FOLDER}\\{id}.json'
+    filename  = f'{CURRENT_FOLDER}/{OUTPUT_FOLDER}/{id}.json'
     if not os.path.exists(filename):
-        filename  = f'{CURRENT_FOLDER}\\{NON_TREATED_DATA}\\{id}.json'
+        filename  = f'{CURRENT_FOLDER}/{NON_TREATED_DATA}/{id}.json'
 
     # Move the file
     if os.path.exists(filename):
@@ -115,7 +115,7 @@ def saveItem():
     id = result.path.split('/')[-1]
 
     #we save on disk
-    filename  = f'{CURRENT_FOLDER}\\{OUTPUT_FOLDER}\\{id}.json'
+    filename  = f'{CURRENT_FOLDER}/{OUTPUT_FOLDER}/{id}.json'
     with open(filename, 'w',  encoding='utf-8') as f:
         json.dump(item, f)
 

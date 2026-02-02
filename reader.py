@@ -39,15 +39,32 @@ def searchItems():
 
     #url
     url = request.args.get('url', type=str)
-    if (url is None):
+    if (url is None or url == ""):
         message = "url parameter is required"
         return { "error": message }, 400
 
     return searchItemsWithUrl(url)
 
+def buildSearchUrl(city: str):
+    url = "https://www.leboncoin.fr/recherche"
 
-def searchItemsWithUrl(url: str):
-    response = asyncio.run(fetch(url))
+    params = {
+        "category":"9",
+        "text":"immeuble",
+        "price":"min-370000",
+        "owner_type":"all",
+        "real_estate_type":"5",
+        "immo_sell_type":"old",
+        "locations":city
+    }
+
+    return {
+        'url': url, 
+        'params': params
+    }
+
+def searchItemsWithUrl(url: str, params= None):
+    response = asyncio.run(fetch(url, params=params))
 
     if (response['status'] != 200):
         print(f"Failed to fetch page, status code: {response['status']}")
@@ -72,7 +89,7 @@ def getItemWithUrl(url: str):
 def getItem():
     #url
     url = request.args.get('url', type=str)
-    if (url is None):
+    if (url is None or url == ""):
         message = "url parameter is required"
         return { "error": message }, 400
     

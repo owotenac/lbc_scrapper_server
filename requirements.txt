@@ -3,3 +3,4 @@ asyncio
 beautifulsoup4
 Flask
 flask-cors
+ollama

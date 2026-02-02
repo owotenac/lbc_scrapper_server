@@ -13,7 +13,7 @@ def index():
 
 app.add_url_rule('/api/searchitems', 'searchitems', searchItems)
 app.add_url_rule('/api/getitem', 'getitem', getItem)
-app.add_url_rule('/api/autoreader', 'autoreader', auto_reader)
+app.add_url_rule('/api/autosearch', 'autosearch', auto_reader)
 app.add_url_rule('/api/colddata', 'colddata', coldData)
 app.add_url_rule('/api/removecolddata', 'removecolddata', removeColdData, methods=['DELETE'])
 app.add_url_rule('/api/ai_analysis', 'ai_analysis', ai_analysis, methods=['POST'])

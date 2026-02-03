@@ -18,10 +18,11 @@ NON_TREATED_DATA = 'ads/non_analyzed'
 
 def auto_reader():
     # Generate the unique folder name
-    base_path = f'{CURRENT_FOLDER}/ads/{NON_TREATED_DATA}'
+    base_path = f'{CURRENT_FOLDER}/{NON_TREATED_DATA}'
     if not os.path.exists(base_path):
         os.makedirs(base_path)    
     for location in searchCity:
+        print(f'searching in {location["name"]}')
         d = reader.buildSearchUrl(location['search'])
         # we get all item from the search
         all_items = reader.searchItemsWithUrl(d['url'], d['params'])
@@ -57,7 +58,7 @@ def auto_reader():
                 json.dump(data_item, f)
 
         
-        return Response({"Status": "OK"}, status=200)
+    return Response({"Status": "OK"}, status=200)
 
 def coldData():
     #kind of data

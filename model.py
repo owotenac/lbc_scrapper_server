@@ -144,7 +144,7 @@ def computeFinancialsWithPrice(financial: dict):
     return financial
 
 
-def getEstimatedMensualite(amount : int, taux_annuel : float = 3.5, duree_annees : int = 25) -> float:
+def getEstimatedMensualite(amount : int, taux_annuel : float = 3.2, duree_annees : int = 25) -> float:
     taux_mensuel = taux_annuel / 100 / 12
     nombre_paiements = duree_annees * 12
     mensualite = amount * (taux_mensuel * (1 + taux_mensuel) ** nombre_paiements) / ((1 + taux_mensuel) ** nombre_paiements - 1)

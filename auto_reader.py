@@ -90,12 +90,18 @@ def removeColdData():
     result = urlparse( url )
     id = result.path.split('/')[-1]
     filename  = f'{CURRENT_FOLDER}/{OUTPUT_FOLDER}/{id}.json'
-    if not os.path.exists(filename):
+    if not os.path.exists(filename): #we remove files from the non analysed data
         filename  = f'{CURRENT_FOLDER}/{NON_TREATED_DATA}/{id}.json'
 
     # Move the file
     if os.path.exists(filename):
-        shutil.move(filename, REMOVED_FOLDER)
+        if os.path.exists(f'{CURRENT_FOLDER}/{REMOVED_FOLDER}/{id}.json'):
+            os.remove(filename)  #we delete the file
+            print(f'Ads {filename} deleted')
+        else:
+            shutil.move(filename, REMOVED_FOLDER)
+            print(f'Ads {filename} moved in {REMOVED_FOLDER}')
+
         return Response({ "status" : "Removed" }, status=200)
     
 
@@ -120,6 +126,7 @@ def saveItem():
     with open(filename, 'w',  encoding='utf-8') as f:
         json.dump(item, f)
 
+    print(f'Ads saved in {filename}')
     return Response({ "status" : "Saved" }, status=200)
 
 
